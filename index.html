@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulador de Conteo y Control de Impresiones | M&P Publicidad y Servicios</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- BARRA SUPERIOR DE ENCABEZADO -->
+  <header class="header-bar">
+    <div class="header-container">
+      <div class="brand-group">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/>
+            <path d="M6 14h12v8H6z"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="brand-title">M&P Publicidad y Servicios</h1>
+          <p class="brand-subtitle">Sistema de Conteo, Control y Tarifación Automatizada de Impresiones</p>
+        </div>
+      </div>
+
+      <div class="header-meta">
+        <div class="system-badge online" id="printerStatusBadge">
+          <span class="status-dot"></span>
+          <span id="printerStatusText">Impresora Multifuncional: EN LÍNEA (USB001 / TCP-IP)</span>
+        </div>
+        <div class="user-pill">
+          <span class="user-role-tag" id="currentRoleTag">EMPLEADO</span>
+          <span class="user-name">Franco Marca Gómez</span>
+          <button class="btn-switch-role" id="btnSwitchRole" title="Cambiar a Administrador / Empleado">Cambiar Rol</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- NAVEGACIÓN POR PESTAÑAS -->
+    <nav class="nav-tabs">
+      <div class="tabs-container">
+        <button class="nav-tab active" data-tab="tab-pos">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3zM3 9h18M9 21V9"/></svg>
+          1. Ventanilla / Punto de Venta
+        </button>
+        <button class="nav-tab" data-tab="tab-spooler">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/></svg>
+          2. Monitor Spooler (Hardware)
+        </button>
+        <button class="nav-tab" data-tab="tab-records">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+          3. Historial y Arqueo de Caja
+        </button>
+        <button class="nav-tab" data-tab="tab-tariffs">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+          4. Catálogo y Tarifas (Admin)
+        </button>
+        <button class="nav-tab" data-tab="tab-uat">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          5. Suite de Pruebas UAT (18/18)
+        </button>
+        <button class="nav-tab" data-tab="tab-deploy">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+          6. Despliegue y Rollback
+        </button>
+        <button class="nav-tab" data-tab="tab-github">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+          7. Exportar a GitHub
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="main-content">
+
+    <!-- ============================================================== -->
+    <!-- PESTAÑA 1: PUNTO DE VENTA / VENTANILLA                         -->
+    <!-- ============================================================== -->
+    <section class="tab-pane active" id="tab-pos">
+      <div class="pos-grid">
+
+        <!-- Columna Izquierda: Entrada y Simulación de Impresión -->
+        <div class="card card-primary">
+          <div class="card-header">
+            <div>
+              <span class="card-eyebrow">RECEPCIÓN DE TRABAJO</span>
+              <h2 class="card-title">Simulador de Trabajo de Impresión</h2>
+            </div>
+            <span class="badge badge-accent">Paso 1: Captura</span>
+          </div>
+
+          <div class="preset-section">
+            <label class="form-label">Plantillas de Trabajo Rápidas (Cargar Caso de Prueba):</label>
+            <div class="preset-buttons">
+              <button class="btn-preset" onclick="loadPreset('tesis')">📘 Tesis (120 págs B/N)</button>
+              <button class="btn-preset" onclick="loadPreset('triptico')">🎨 Tríptico (50 págs Color Couché)</button>
+              <button class="btn-preset" onclick="loadPreset('monografia')">📄 Monografía (30 págs Mixto)</button>
+              <button class="btn-preset" onclick="loadPreset('afiche')">🖼️ Afiche (10 Opalina Color)</button>
+            </div>
+          </div>
+
+          <form id="printJobForm" onsubmit="event.preventDefault(); calculateTotal();">
+            <div class="form-group">
+              <label for="clientName">Nombre del Cliente / Empresa:</label>
+              <input type="text" id="clientName" class="form-control" value="Universidad Nacional / Público General" required>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-6">
+                <label for="docName">Nombre del Archivo / Trabajo:</label>
+                <input type="text" id="docName" class="form-control" value="Informe_Proyecto_Software.pdf" required>
+              </div>
+              <div class="form-group col-6">
+                <label for="printerSelect">Impresora Destino:</label>
+                <select id="printerSelect" class="form-control">
+                  <option value="EPSON_L8050">Epson EcoTank L8050 (Color / USB001)</option>
+                  <option value="HP_LASER_PRO">HP LaserJet Pro M404dw (B/N / Red IP)</option>
+                  <option value="CANON_PLOTTER">Canon imagePROGRAF (Formatos Especiales)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-4">
+                <label for="pageCount">Cantidad de Páginas / Hojas:</label>
+                <input type="number" id="pageCount" class="form-control input-highlight" value="35" min="1" max="5000" oninput="calculateTotal()" required>
+              </div>
+              <div class="form-group col-4">
+                <label for="paperMaterial">Material de Papel:</label>
+                <select id="paperMaterial" class="form-control" onchange="calculateTotal()">
+                  <option value="BOND_75">Papel Bond 75 gr</option>
+                  <option value="BOND_80">Papel Bond 80 gr</option>
+                  <option value="CARTULINA">Cartulina Escolar / Hilo</option>
+                  <option value="COUCHE_150">Papel Couché 150 gr</option>
+                  <option value="OPALINA">Cartulina Opalina 180 gr</option>
+                </select>
+              </div>
+              <div class="form-group col-4">
+                <label for="printColorMode">Modalidad de Color:</label>
+                <select id="printColorMode" class="form-control" onchange="calculateTotal()">
+                  <option value="BN">Blanco y Negro (Monocromo)</option>
+                  <option value="COLOR">A Todo Color</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-6">
+                <label for="copiesCount">Número de Juegos / Copias:</label>
+                <input type="number" id="copiesCount" class="form-control" value="1" min="1" max="100" oninput="calculateTotal()">
+              </div>
+              <div class="form-group col-6">
+                <label for="discountRate">Descuento Especial (%):</label>
+                <input type="number" id="discountRate" class="form-control" value="0" min="0" max="50" oninput="calculateTotal()">
+              </div>
+            </div>
+
+            <div class="simulation-banner">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+              <span>El sistema intercepta automáticamente los datos del spooler de impresión en menos de <strong>0.2 segundos</strong>.</span>
+            </div>
+          </form>
+        </div>
+
+        <!-- Columna Derecha: Motor de Cálculo y Cobro Inmediato -->
+        <div class="card card-checkout">
+          <div class="card-header">
+            <div>
+              <span class="card-eyebrow">MOTOR DE CÁLCULO MVC</span>
+              <h2 class="card-title">Liquidación y Cobro en Ventanilla</h2>
+            </div>
+            <span class="badge badge-success">Paso 2: Validación</span>
+          </div>
+
+          <div class="calculation-summary">
+            <div class="cost-item">
+              <span>Hojas Totales (Hojas x Copias):</span>
+              <strong id="summaryTotalPages">35 hojas</strong>
+            </div>
+            <div class="cost-item">
+              <span>Tarifa Unitaria Aplicada:</span>
+              <strong id="summaryUnitPrice">S/ 0.10 c/u</strong>
+            </div>
+            <div class="cost-item">
+              <span>Material Seleccionado:</span>
+              <span id="summaryMaterialBadge" class="tag-pill">Papel Bond 75 gr</span>
+            </div>
+            <div class="cost-item">
+              <span>Modalidad:</span>
+              <span id="summaryColorBadge" class="tag-pill">Blanco y Negro</span>
+            </div>
+            <div class="cost-item" id="discountRow" style="display:none;">
+              <span>Descuento Aplicado:</span>
+              <strong id="summaryDiscount" class="text-danger">- S/ 0.00</strong>
+            </div>
+
+            <div class="total-callout">
+              <div class="total-label">MONTO TOTAL A COBRAR:</div>
+              <div class="total-amount" id="totalAmountDisplay">S/ 3.50</div>
+              <div class="total-subtext">Cálculo validado contra catálogo comercial activo</div>
+            </div>
+
+            <div class="actions-group">
+              <button class="btn btn-primary btn-block btn-lg" onclick="processCheckout()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                Confirmar Cobro y Generar Ticket
+              </button>
+              <div class="action-sub-buttons">
+                <button class="btn btn-outline" onclick="simulateSpoolerDirect()">Simular Lectura Automática USB</button>
+                <button class="btn btn-secondary" onclick="resetForm()">Limpiar Formulario</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mini Ticket Preview -->
+          <div class="ticket-preview-box" id="recentTicketBox">
+            <div class="ticket-header">
+              <span class="ticket-title">Último Ticket Emitido</span>
+              <span class="ticket-id" id="recentTicketId">#MP-00100</span>
+            </div>
+            <div class="ticket-body" id="recentTicketBody">
+              Esperando confirmación del primer trabajo...
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- PESTAÑA 2: MONITOR DE SPOOLER (HARDWARE)                       -->
+    <!-- ============================================================== -->
+    <section class="tab-pane" id="tab-spooler">
+      <div class="spooler-layout">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <span class="card-eyebrow">CAPA DE HARDWARE Y COMUNICACIONES</span>
+              <h2 class="card-title">Diagrama de Conexión en Tiempo Real</h2>
+            </div>
+            <button class="btn btn-sm btn-outline" onclick="toggleHardwareFault()">Simular / Restaurar Falla USB</button>
+          </div>
+
+          <div class="network-diagram">
+            <div class="node-box" id="nodePC">
+              <div class="node-icon">💻</div>
+              <div class="node-title">PC Punto de Venta</div>
+              <div class="node-meta">Windows 11 / App MVC</div>
+              <span class="badge badge-success">Activo</span>
+            </div>
+
+            <div class="connection-pipe active" id="commPipe">
+              <div class="pipe-label" id="pipeLabel">USB 2.0 / TCP-IP Sockets</div>
+              <div class="flow-particles"></div>
+            </div>
+
+            <div class="node-box" id="nodePrinter">
+              <div class="node-icon">🖨️</div>
+              <div class="node-title">Impresora Multifuncional</div>
+              <div class="node-meta" id="printerModelMeta">Epson EcoTank L8050</div>
+              <span class="badge badge-success" id="printerNodeBadge">Conectada</span>
+            </div>
+          </div>
+
+          <div class="spooler-controls">
+            <button class="btn btn-outline" onclick="sendTestJobSpooler(15, 'BN')">Enviar Trabajo Test (15 págs B/N)</button>
+            <button class="btn btn-outline" onclick="sendTestJobSpooler(40, 'COLOR')">Enviar Trabajo Test (40 págs Color)</button>
+            <button class="btn btn-secondary" onclick="clearConsoleLog()">Limpiar Log</button>
+          </div>
+
+          <div class="console-box">
+            <div class="console-header">
+              <span>Registro de Eventos del Spooler de Windows (winspool.drv API):</span>
+              <span class="console-status">LIVE STREAM</span>
+            </div>
+            <pre class="console-content" id="spoolerConsoleLog">// Sistema iniciado. Monitor de cola de impresión escuchando en USB001...
+[SPOOLER-INIT] Driver Epson EcoTank detectado con estado: READY
+[SOCKET-TCP] Servicio de escucha local activado en 127.0.0.1:9100
+[DB-PERSISTENCE] Base de datos SQLite / LocalStorage sincronizada correctamente.</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- PESTAÑA 3: HISTORIAL Y ARQUEO DE CAJA                          -->
+    <!-- ============================================================== -->
+    <section class="tab-pane" id="tab-records">
+      <div class="records-layout">
+        <!-- Tarjetas KPI de Caja -->
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-val text-coral" id="kpiTotalRevenue">S/ 0.00</div>
+            <div class="kpi-title">Recaudación Total en Caja</div>
+            <div class="kpi-sub">Total de trabajos cobrados hoy</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-val text-teal" id="kpiTotalPages">0</div>
+            <div class="kpi-title">Hojas Impresas Contabilizadas</div>
+            <div class="kpi-sub">Conteo automatizado sin error</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-val text-dark" id="kpiTotalJobs">0</div>
+            <div class="kpi-title">Trabajos Despachados</div>
+            <div class="kpi-sub">Transacciones registradas</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-val text-success" id="kpiAvgTicket">S/ 0.00</div>
+            <div class="kpi-title">Ticket Promedio</div>
+            <div class="kpi-sub">Por cliente atendido</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <span class="card-eyebrow">TRAZABILIDAD Y AUDITORÍA</span>
+              <h2 class="card-title">Historial de Impresiones Registradas</h2>
+            </div>
+            <div class="table-actions">
+              <button class="btn btn-sm btn-outline" onclick="exportRecordsToCSV()">📥 Exportar Reporte CSV</button>
+              <button class="btn btn-sm btn-danger" onclick="clearAllRecords()">Borrar Historial</button>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="data-table" id="recordsTable">
+              <thead>
+                <tr>
+                  <th>N.º Ticket</th>
+                  <th>Fecha y Hora</th>
+                  <th>Cliente</th>
+                  <th>Archivo</th>
+                  <th>Hojas</th>
+                  <th>Material</th>
+                  <th>Color</th>
+                  <th>Monto Total</th>
+                  <th>Operador</th>
+                </tr>
+              </thead>
+              <tbody id="recordsTableBody">
+                <tr>
+                  <td colspan="9" class="text-center py-4">No hay impresiones registradas aún. ¡Procesa tu primer trabajo en Ventanilla!</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- PESTAÑA 4: CONFIGURACIÓN DE TARIFAS (ADMIN)                    -->
+    <!-- ============================================================== -->
+    <section class="tab-pane" id="tab-tariffs">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <span class="card-eyebrow">CAPA DE APLICACIÓN Y DATOS</span>
+            <h2 class="card-title">Matriz de Tarifas por Material y Color</h2>
+          </div>
+          <button class="btn btn-sm btn-outline" onclick="restoreDefaultTariffs()">Restaurar Tarifas Predeterminadas</button>
+        </div>
+
+        <p class="section-desc">Modifica los precios unitarios por hoja según tipo de soporte y modalidad de color. Los cambios se guardan con persistencia local inmediata y se aplican automáticamente en el motor de cálculo.</p>
+
+        <div class="table-responsive">
+          <table class="data-table" id="tariffsTable">
+            <thead>
+              <tr>
+                <th>Código</th>
+                <th>Material de Papel</th>
+                <th>Gramaje / Descripción</th>
+                <th>Tarifa B/N (S/ por hoja)</th>
+                <th>Tarifa Color (S/ por hoja)</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody id="tariffsTableBody">
+              <!-- Dinámico vía JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- PESTAÑA 5: SUITE DE PRUEBAS UAT (18 CRITERIOS)                 -->
+    <!-- ============================================================== -->
+    <section class="tab-pane" id="tab-uat">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <span class="card-eyebrow">ASEGURAMIENTO DE CALIDAD</span>
+            <h2 class="card-title">Lista de Verificación para Pruebas de Aceptación (UAT)</h2>
+          </div>
+          <div class="header-tools">
+            <span class="badge badge-success" id="uatBadgeStatus">18 / 18 Criterios Aprobados</span>
+            <button class="btn btn-sm btn-primary" onclick="runAllUATTests()">⚡ Ejecutar Validación Automatizada</button>
+          </div>
+        </div>
+
+        <p class="section-desc">Criterio de Aceptación: La solución es aceptada formalmente cuando las funciones críticas de registro, conteo, cálculo del costo, almacenamiento y usabilidad operan con total conformidad.</p>
+
+        <div class="table-responsive">
+          <table class="data-table" id="uatTable">
+            <thead>
+              <tr>
+                <th style="width: 60px;">N.º</th>
+                <th>Criterio de Aceptación</th>
+                <th>Resultado Esperado</th>
+                <th style="width: 150px;">Prueba en Vivo</th>
+                <th style="width: 130px;">Estado UAT</th>
+              </tr>
+            </thead>
+            <tbody id="uatTableBody">
+              <!-- Dinámico vía JS con los 18 criterios de la presentación -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- PESTAÑA 6: PROTOCOLO DE DESPLIEGUE Y ROLLBACK                  -->
+    <!-- ============================================================== -->
+    <section class="tab-pane" id="tab-deploy">
+      <div class="deploy-grid">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <span class="card-eyebrow">PASE A PRODUCCIÓN</span>
+              <h2 class="card-title">Cronograma y Protocolo de Despliegue (11 Etapas)</h2>
+            </div>
+            <button class="btn btn-sm btn-outline" onclick="simulateDeploymentCycle()">Simular Despliegue Completo</button>
+          </div>
+
+          <div class="stages-stepper" id="stagesStepper">
+            <!-- 11 etapas generadas por JS -->
+          </div>
+        </div>
+
+        <div class="card card-warning">
+          <div class="card-header">
+            <div>
+              <span class="card-eyebrow">PLAN DE CONTINGENCIA</span>
+              <h2 class="card-title">Procedimiento de Reversión (Rollback)</h2>
+            </div>
+            <button class="btn btn-sm btn-danger" onclick="triggerRollbackSimulation()">Simular Activación de Rollback</button>
+          </div>
+
+          <div class="rollback-flow" id="rollbackFlowBox">
+            <div class="flow-step">1. Detección del incidente y evaluación de gravedad.</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-step">2. ¿Afecta la operación de ventanilla? <strong>[SÍ]</strong></div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-step">3. Detención temporal del sistema y autorización administrativa.</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-step">4. Respaldo preventivo y exportación de datos transaccionales del día.</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-step">5. Restauración a versión anterior estable o registro contingente.</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-step">6. Verificación de información con impresión de prueba.</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-step">7. Continuidad de la atención y análisis causa-raíz en laboratorio.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- PESTAÑA 7: EXPORTAR A GITHUB Y PUBLICACIÓN                     -->
+    <!-- ============================================================== -->
+    <section class="tab-pane" id="tab-github">
+      <div class="github-layout">
+        <div class="card card-primary">
+          <div class="card-header">
+            <div>
+              <span class="card-eyebrow">CONTROL DE VERSIONES Y DEPLOY</span>
+              <h2 class="card-title">Instrucciones para Publicar en GitHub & GitHub Pages</h2>
+            </div>
+            <span class="badge badge-accent">Listo para Exportar</span>
+          </div>
+
+          <div class="github-steps">
+            <div class="github-step-card">
+              <div class="step-num">1</div>
+              <div>
+                <h4>Crear el Repositorio en GitHub</h4>
+                <p>Ingresa a <a href="https://github.com/new" target="_blank">github.com/new</a> y crea un repositorio público llamado <code>simulador-impresiones-myp</code>.</p>
+              </div>
+            </div>
+
+            <div class="github-step-card">
+              <div class="step-num">2</div>
+              <div>
+                <h4>Subir los Archivos con Git (o Script Automático)</h4>
+                <p>Puedes ejecutar el archivo <code>deploy_to_github.bat</code> incluido en esta carpeta, o usar los siguientes comandos en tu terminal:</p>
+                <div class="code-block">
+<pre>cd "c:\Users\FRANCO\Downloads\ING SOFTWARE DOCS\proyecto\simulador-impresiones-myp"
+git init
+git add .
+git commit -m "feat: Simulador interactivo de conteo y control de impresiones M&P"
+git branch -M main
+git remote add origin https://github.com/TU_USUARIO/simulador-impresiones-myp.git
+git push -u origin main</pre>
+                </div>
+              </div>
+            </div>
+
+            <div class="github-step-card">
+              <div class="step-num">3</div>
+              <div>
+                <h4>Activar GitHub Pages (Web en Vivo Gratis)</h4>
+                <p>En tu repositorio en GitHub: ve a <strong>Settings → Pages → Branch: main / root → Save</strong>. En menos de 1 minuto tendrás tu enlace público oficial para compartir en la presentación:</p>
+                <div class="link-callout">
+                  <span>URL Pública:</span>
+                  <code>https://TU_USUARIO.github.io/simulador-impresiones-myp/</code>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL DE RECIBO / TICKET DETALLADO -->
+  <div class="modal-overlay" id="ticketModal" style="display:none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Comprobante de Trabajo de Impresión</h3>
+        <button class="btn-close" onclick="closeTicketModal()">×</button>
+      </div>
+      <div class="modal-body" id="modalTicketContent">
+        <!-- Renderizado dinámico -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="window.print()">🖨️ Imprimir Ticket</button>
+        <button class="btn btn-primary" onclick="closeTicketModal()">Aceptar y Continuar</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer-bar">
+    <div class="footer-container">
+      <span>M&P Publicidad y Servicios © 2026 — Proyecto de Ingeniería de Software</span>
+      <span>Autor: Franco Marca Gómez</span>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
